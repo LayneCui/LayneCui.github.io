@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="###说明接下来会用三个篇幅来学习总结 JVM，所涉及内容如下图：">
+<meta name="description" content="说明接下来会用三个篇幅来学习总结 JVM，所涉及内容如下图：">
 <meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM（ 上）">
 <meta property="og:url" content="http://mp.weixin.qq.com/s?__biz=MzI2MzU0MTgzNw==&mid=100000011&idx=1&sn=6abf17b44b49de680c76ec808719202f&chksm=6abb04295dcc8d3f88b62e54c44b02d5836c85c7a2a760ce999834579a5923d0d5b14c5ecf75&scene=18#rd/2020/07/23/JVM（上）/index.html">
 <meta property="og:site_name" content="LayneCui's Blog">
-<meta property="og:description" content="###说明接下来会用三个篇幅来学习总结 JVM，所涉及内容如下图：">
+<meta property="og:description" content="说明接下来会用三个篇幅来学习总结 JVM，所涉及内容如下图：">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-20ee3af5c4458c45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-32fd90730b2da968.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-08fe09aa9c15953d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -95,10 +95,10 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-dc76f1d3c2a715fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-c23df529e0ed1402.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-3de6f18afaae63a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2020-07-23T09:11:19.227Z">
+<meta property="og:updated_time" content="2020-07-23T09:13:18.222Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM（ 上）">
-<meta name="twitter:description" content="###说明接下来会用三个篇幅来学习总结 JVM，所涉及内容如下图：">
+<meta name="twitter:description" content="说明接下来会用三个篇幅来学习总结 JVM，所涉及内容如下图：">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1386980-20ee3af5c4458c45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -329,7 +329,7 @@
       
 
       
-        <p>###<strong>说明</strong><br>接下来会用三个篇幅来学习总结 JVM，所涉及内容如下图：</p>
+        <h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a><strong>说明</strong></h3><p>接下来会用三个篇幅来学习总结 JVM，所涉及内容如下图：</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/1386980-20ee3af5c4458c45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <a id="more"></a>
 <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a><strong>定义</strong></h3><blockquote>
@@ -616,7 +616,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#特性"><span class="nav-number">1.1.</span> <span class="nav-text">特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM、JRE、JDK-的关系"><span class="nav-number">1.2.</span> <span class="nav-text">JVM、JRE、JDK 的关系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#角色"><span class="nav-number">2.</span> <span class="nav-text">角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构成"><span class="nav-number">3.</span> <span class="nav-text">构成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类加载器"><span class="nav-number">3.1.</span> <span class="nav-text">类加载器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行引擎"><span class="nav-number">3.2.</span> <span class="nav-text">执行引擎</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#本地方法接口"><span class="nav-number">3.3.</span> <span class="nav-text">本地方法接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#垃圾回收器"><span class="nav-number">3.4.</span> <span class="nav-text">垃圾回收器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行时数据区"><span class="nav-number">3.5.</span> <span class="nav-text">运行时数据区</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#程序计数器"><span class="nav-number">3.5.1.</span> <span class="nav-text">程序计数器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#虚拟机栈"><span class="nav-number">3.5.2.</span> <span class="nav-text">虚拟机栈</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#本地方法栈"><span class="nav-number">3.5.3.</span> <span class="nav-text">本地方法栈</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#堆"><span class="nav-number">3.5.4.</span> <span class="nav-text">堆</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#方法区"><span class="nav-number">3.5.5.</span> <span class="nav-text">方法区</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#直接内存"><span class="nav-number">3.5.6.</span> <span class="nav-text">直接内存</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">2.</span> <span class="nav-text">定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#特性"><span class="nav-number">2.1.</span> <span class="nav-text">特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM、JRE、JDK-的关系"><span class="nav-number">2.2.</span> <span class="nav-text">JVM、JRE、JDK 的关系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#角色"><span class="nav-number">3.</span> <span class="nav-text">角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构成"><span class="nav-number">4.</span> <span class="nav-text">构成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类加载器"><span class="nav-number">4.1.</span> <span class="nav-text">类加载器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行引擎"><span class="nav-number">4.2.</span> <span class="nav-text">执行引擎</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#本地方法接口"><span class="nav-number">4.3.</span> <span class="nav-text">本地方法接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#垃圾回收器"><span class="nav-number">4.4.</span> <span class="nav-text">垃圾回收器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行时数据区"><span class="nav-number">4.5.</span> <span class="nav-text">运行时数据区</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#程序计数器"><span class="nav-number">4.5.1.</span> <span class="nav-text">程序计数器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#虚拟机栈"><span class="nav-number">4.5.2.</span> <span class="nav-text">虚拟机栈</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#本地方法栈"><span class="nav-number">4.5.3.</span> <span class="nav-text">本地方法栈</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#堆"><span class="nav-number">4.5.4.</span> <span class="nav-text">堆</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#方法区"><span class="nav-number">4.5.5.</span> <span class="nav-text">方法区</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#直接内存"><span class="nav-number">4.5.6.</span> <span class="nav-text">直接内存</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
