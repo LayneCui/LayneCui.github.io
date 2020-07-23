@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="核心思想：RxJava学习和使用最重要的是掌握它的核心思想，它在 github 主页的介绍是：  “a library for composing asynchronous and event-based programs using observable sequences for the Java VM”  我理解是：一个运行在 Java 虚拟机上的可序列观察组合、异步和基于事件的库。所以能推">
+<meta name="description" content="核心思想：RxJava学习和使用最重要的是掌握它的核心思想，它在 github 主页的介绍是：  “a library for composing asynchronous and event-based programs using observable sequences for the Java VM”  我理解是：一个运行在 Java 虚拟机上的可序列观察组合、异步和基于事件的库。所以能">
 <meta name="keywords" content="RxJava,异步">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RxJava用法及实战">
 <meta property="og:url" content="http://mp.weixin.qq.com/s?__biz=MzI2MzU0MTgzNw==&mid=100000011&idx=1&sn=6abf17b44b49de680c76ec808719202f&chksm=6abb04295dcc8d3f88b62e54c44b02d5836c85c7a2a760ce999834579a5923d0d5b14c5ecf75&scene=18#rd/2019/05/23/RxJava用法及实战/index.html">
 <meta property="og:site_name" content="LayneCui's Blog">
-<meta property="og:description" content="核心思想：RxJava学习和使用最重要的是掌握它的核心思想，它在 github 主页的介绍是：  “a library for composing asynchronous and event-based programs using observable sequences for the Java VM”  我理解是：一个运行在 Java 虚拟机上的可序列观察组合、异步和基于事件的库。所以能推">
+<meta property="og:description" content="核心思想：RxJava学习和使用最重要的是掌握它的核心思想，它在 github 主页的介绍是：  “a library for composing asynchronous and event-based programs using observable sequences for the Java VM”  我理解是：一个运行在 Java 虚拟机上的可序列观察组合、异步和基于事件的库。所以能">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-31c407bd122f2028.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-90471cc97e0b1145.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-2b30b52ea59cf499.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -95,10 +95,10 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-1434a016ee277a95.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-1d572df8c5f3a1ae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-7a741cb044032189.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2020-07-23T07:56:00.691Z">
+<meta property="og:updated_time" content="2020-07-23T08:03:30.061Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RxJava用法及实战">
-<meta name="twitter:description" content="核心思想：RxJava学习和使用最重要的是掌握它的核心思想，它在 github 主页的介绍是：  “a library for composing asynchronous and event-based programs using observable sequences for the Java VM”  我理解是：一个运行在 Java 虚拟机上的可序列观察组合、异步和基于事件的库。所以能推">
+<meta name="twitter:description" content="核心思想：RxJava学习和使用最重要的是掌握它的核心思想，它在 github 主页的介绍是：  “a library for composing asynchronous and event-based programs using observable sequences for the Java VM”  我理解是：一个运行在 Java 虚拟机上的可序列观察组合、异步和基于事件的库。所以能">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1386980-31c407bd122f2028.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -329,7 +329,8 @@
       
 
       
-        <h3 id="核心思想："><a href="#核心思想：" class="headerlink" title="核心思想："></a><strong>核心思想：</strong></h3><p>RxJava学习和使用最重要的是掌握它的核心思想，它在 github 主页的介绍是：</p>
+        <a id="more"></a>
+<h3 id="核心思想："><a href="#核心思想：" class="headerlink" title="核心思想："></a><strong>核心思想：</strong></h3><p>RxJava学习和使用最重要的是掌握它的核心思想，它在 github 主页的介绍是：</p>
 <blockquote>
 <p>“a library for composing asynchronous and event-based programs using observable sequences for the Java VM”</p>
 </blockquote>
@@ -342,7 +343,6 @@
 <li>事件：可以理解为起点发送的事件，也可以理解为每个中间环节的操作</li>
 </ul>
 <p>根据使用经验来总结其核心思想：在起点注册观察后分发一个事件，流式操作中间步骤，终点消费事件解除观察。</p>
-<a id="more"></a>
 <p>因为它的操作符很多，遍历学习操作符性价比很小，我们根据其核心思想，以输出的方式来学习 RxJava。</p>
 <h3 id="普通应用："><a href="#普通应用：" class="headerlink" title="普通应用："></a><strong>普通应用：</strong></h3><p>业务要求1：有一个图片url地址，下载图片并且将图片显示在 ImageView。</p>
 <p>思路：事件为下载并且展示图片到 ImageView，事件起点为分发（放置）一个 url 给下游中间步骤1（传送带），下游中间步骤1拿到的为String而步骤二设置图片显示需要的数据为 Bitmap，所以此步骤需要 Map 操作符来将url转换为 Bitmap并且应该 为异步操作，然后将 Bitmap分发给下游中间步骤 2，步骤 2 将 Bitmap更新到 ImageView，消费掉事件，事件结束。</p>
