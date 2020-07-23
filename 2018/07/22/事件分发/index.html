@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="LayneCui's Blog">
 <meta property="og:description" content="事件的种类   手势类型 事件名称 说明     按下 MotionEvent.ACTION_DOWN 一切事件的起点、可以有多个   移动 MotionEvent.ACTION_MOVE 手指移动时持续触发   抬起 MotionEvent.ACTION_UP 手指抬起，事件结束   取消 MotionEvent.ACTION_CANCEL 事件取消，比如ViewGroup抢夺事件    事件的">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-402acf89ae69fd5d.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2020-07-22T11:28:31.218Z">
+<meta property="og:updated_time" content="2020-07-23T07:55:31.019Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="View 事件分发">
 <meta name="twitter:description" content="事件的种类   手势类型 事件名称 说明     按下 MotionEvent.ACTION_DOWN 一切事件的起点、可以有多个   移动 MotionEvent.ACTION_MOVE 手指移动时持续触发   抬起 MotionEvent.ACTION_UP 手指抬起，事件结束   取消 MotionEvent.ACTION_CANCEL 事件取消，比如ViewGroup抢夺事件    事件的">
@@ -162,7 +162,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">人懒爱玩，不易相处</p>
+        <h1 class="site-subtitle" itemprop="description">人懒爱玩，不易相处</h1>
       
   </div>
 
@@ -271,7 +271,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">View 事件分发</h1>
+          <h2 class="post-title" itemprop="name headline">View 事件分发</h2>
         
 
         <div class="post-meta">
@@ -353,6 +353,7 @@
 </tbody>
 </table>
 <h3 id="事件的传递"><a href="#事件的传递" class="headerlink" title="事件的传递"></a>事件的传递</h3><p>在手指接触屏幕那一刻，由屏幕到 Native 层，再由 Native 传到 Activity 的 <code>dispatchTouchEvent();</code> 我们来看一下Activity 的代码：</p>
+<a id="more"></a>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">     * Called to process touch screen events.  You can override this to</div><div class="line">     * intercept all touch screen events before they are dispatched to the</div><div class="line">     * window.  Be sure to call this implementation for touch screen events</div><div class="line">     * that should be handled normally.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> ev The touch screen event.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span> boolean Return true if this event was consumed.</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dispatchTouchEvent</span><span class="params">(MotionEvent ev)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (ev.getAction() == MotionEvent.ACTION_DOWN) &#123;</div><div class="line">          <span class="comment">// activity无论分发按键事件、触摸事件或者轨迹球事件都会调用Activity#onUserInteraction()</span></div><div class="line">          <span class="comment">// 重写该方法可知道用户用某种方式和你正在运行的activity交互</span></div><div class="line">            onUserInteraction();</div><div class="line">        &#125;</div><div class="line">            <span class="comment">// 如果 getWindow().superDispatchTouchEvent(ev) 返回为 true 则说明事件被 Activity</span></div><div class="line">            <span class="comment">// 子布局消费掉，事件被处理则返回 true</span></div><div class="line">        <span class="keyword">if</span> (getWindow().superDispatchTouchEvent(ev)) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">            <span class="comment">// 如果 Activity 子布局没有消费该事件，则事件由 Activity 处理 </span></div><div class="line">        <span class="keyword">return</span> onTouchEvent(ev);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 <p>为方便查看，我在代码中加了注释，因为我们关心的是 View 的事件分发，所以我们关心的应该是<code>getWindow().superDispatchTouchEvent(ev)</code>，分发的过程。跟进去我们发现 <code>superDispatchTouchEvent(ev)</code> 在 Window 中是一个抽象方法，在 Android 中 PhoneWindow 是 Window 的唯一实现子类。看一下 <code>PhoneWindow#superDispatchTouchEvent(MotionEvent event)</code> :</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">superDispatchTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> mDecor.superDispatchTouchEvent(event);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
@@ -475,7 +476,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">LayneCui</p>
-              <p class="site-description motion-element" itemprop="description">河工大12级，就职于安邦电商。爱生活，爱coding。</p>
+              <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
           <nav class="site-state motion-element">
