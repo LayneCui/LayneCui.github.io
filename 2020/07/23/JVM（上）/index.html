@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="###说明接下来会用三个篇幅来学习总结 JVM，所涉及内容如下图：  定义 JVM 全称 Java Virtual Machine，也就是我们耳熟能详的 Java 虚拟机。它能识别 .class后缀的文件，并且能够将其解析成具体的机器指令，最终调用操作系统上的函数，完成我们想要的操作。  特性JVM 的存在使得 Java 程序具有运行平台无关性的特点。 JVM、JRE、JDK 的关系JVM只是一个">
+<meta name="description" content="###说明接下来会用三个篇幅来学习总结 JVM，所涉及内容如下图：">
 <meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM（ 上）">
 <meta property="og:url" content="http://mp.weixin.qq.com/s?__biz=MzI2MzU0MTgzNw==&mid=100000011&idx=1&sn=6abf17b44b49de680c76ec808719202f&chksm=6abb04295dcc8d3f88b62e54c44b02d5836c85c7a2a760ce999834579a5923d0d5b14c5ecf75&scene=18#rd/2020/07/23/JVM（上）/index.html">
 <meta property="og:site_name" content="LayneCui's Blog">
-<meta property="og:description" content="###说明接下来会用三个篇幅来学习总结 JVM，所涉及内容如下图：  定义 JVM 全称 Java Virtual Machine，也就是我们耳熟能详的 Java 虚拟机。它能识别 .class后缀的文件，并且能够将其解析成具体的机器指令，最终调用操作系统上的函数，完成我们想要的操作。  特性JVM 的存在使得 Java 程序具有运行平台无关性的特点。 JVM、JRE、JDK 的关系JVM只是一个">
+<meta property="og:description" content="###说明接下来会用三个篇幅来学习总结 JVM，所涉及内容如下图：">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-20ee3af5c4458c45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-32fd90730b2da968.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-08fe09aa9c15953d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -95,10 +95,10 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-dc76f1d3c2a715fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-c23df529e0ed1402.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-3de6f18afaae63a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2020-07-23T09:07:57.924Z">
+<meta property="og:updated_time" content="2020-07-23T09:11:19.227Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM（ 上）">
-<meta name="twitter:description" content="###说明接下来会用三个篇幅来学习总结 JVM，所涉及内容如下图：  定义 JVM 全称 Java Virtual Machine，也就是我们耳熟能详的 Java 虚拟机。它能识别 .class后缀的文件，并且能够将其解析成具体的机器指令，最终调用操作系统上的函数，完成我们想要的操作。  特性JVM 的存在使得 Java 程序具有运行平台无关性的特点。 JVM、JRE、JDK 的关系JVM只是一个">
+<meta name="twitter:description" content="###说明接下来会用三个篇幅来学习总结 JVM，所涉及内容如下图：">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1386980-20ee3af5c4458c45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -331,6 +331,7 @@
       
         <p>###<strong>说明</strong><br>接下来会用三个篇幅来学习总结 JVM，所涉及内容如下图：</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/1386980-20ee3af5c4458c45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<a id="more"></a>
 <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a><strong>定义</strong></h3><blockquote>
 <p>JVM 全称 Java Virtual Machine，也就是我们耳熟能详的 Java 虚拟机。它能识别 .class后缀的文件，并且能够将其解析成具体的机器指令，最终调用操作系统上的函数，完成我们想要的操作。</p>
 </blockquote>
