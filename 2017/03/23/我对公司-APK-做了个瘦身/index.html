@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="安卓,优化," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="hello, 大家好,鸡年第一篇blog, 因为节后到现在一直比较忙,上班忙工作,下班忙上分,王者农药,喝了就停不下来… ####开篇语最近接到老大一个任务:为我们的应用做瘦身.我们电商类项目到现在维护到2.7.0 APK 已经有35M了,说实话已经很大了.通过这两天的努力把安装包从35M瘦身到了23.8M.这其实还不是极限,由于一些原因的限制目前就到23.8M 为止.做个记录,方便以后 revi">
+<meta name="keywords" content="安卓,优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我对公司 APK 做了个瘦身">
+<meta property="og:url" content="http://mp.weixin.qq.com/s?__biz=MzI2MzU0MTgzNw==&mid=100000011&idx=1&sn=6abf17b44b49de680c76ec808719202f&chksm=6abb04295dcc8d3f88b62e54c44b02d5836c85c7a2a760ce999834579a5923d0d5b14c5ecf75&scene=18#rd/2017/03/23/我对公司-APK-做了个瘦身/index.html">
+<meta property="og:site_name" content="LayneCui's Blog">
+<meta property="og:description" content="hello, 大家好,鸡年第一篇blog, 因为节后到现在一直比较忙,上班忙工作,下班忙上分,王者农药,喝了就停不下来… ####开篇语最近接到老大一个任务:为我们的应用做瘦身.我们电商类项目到现在维护到2.7.0 APK 已经有35M了,说实话已经很大了.通过这两天的努力把安装包从35M瘦身到了23.8M.这其实还不是极限,由于一些原因的限制目前就到23.8M 为止.做个记录,方便以后 revi">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1386980-f2658ee1a72abbe1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1386980-936eb50fbd397e01.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1386980-d7cfc61d09725043.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1386980-9bb837738dc73c82.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1386980-a094b9f025cd8ffe.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1386980-492d500ef73f2a02.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2020-07-23T09:02:48.423Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="我对公司 APK 做了个瘦身">
+<meta name="twitter:description" content="hello, 大家好,鸡年第一篇blog, 因为节后到现在一直比较忙,上班忙工作,下班忙上分,王者农药,喝了就停不下来… ####开篇语最近接到老大一个任务:为我们的应用做瘦身.我们电商类项目到现在维护到2.7.0 APK 已经有35M了,说实话已经很大了.通过这两天的努力把安装包从35M瘦身到了23.8M.这其实还不是极限,由于一些原因的限制目前就到23.8M 为止.做个记录,方便以后 revi">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1386980-f2658ee1a72abbe1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mp.weixin.qq.com/s?__biz=MzI2MzU0MTgzNw==&mid=100000011&idx=1&sn=6abf17b44b49de680c76ec808719202f&chksm=6abb04295dcc8d3f88b62e54c44b02d5836c85c7a2a760ce999834579a5923d0d5b14c5ecf75&scene=18#rd/2017/03/23/我对公司-APK-做了个瘦身/"/>
+
+
+
+
+
+  <title>我对公司 APK 做了个瘦身 | LayneCui's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LayneCui's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">人懒爱玩，不易相处</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://mp.weixin.qq.com/s?__biz=MzI2MzU0MTgzNw==&mid=100000011&idx=1&sn=6abf17b44b49de680c76ec808719202f&chksm=6abb04295dcc8d3f88b62e54c44b02d5836c85c7a2a760ce999834579a5923d0d5b14c5ecf75&scene=18#rd/2017/03/23/我对公司-APK-做了个瘦身/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LayneCui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/23710928?s=400&u=d2045e58dfd8ecab28842991a417765195a2ae66&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LayneCui's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">我对公司 APK 做了个瘦身</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-23T16:46:35+08:00">
+                2017-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>hello, 大家好,鸡年第一篇blog, 因为节后到现在一直比较忙,上班忙工作,下班忙上分,王者农药,喝了就停不下来…</p>
+<p>####开篇语<br>最近接到老大一个任务:为我们的应用做瘦身.我们电商类项目到现在维护到2.7.0 APK 已经有35M了,说实话已经很大了.通过这两天的努力把安装包从35M瘦身到了23.8M.这其实还不是极限,由于一些原因的限制目前就到23.8M 为止.做个记录,方便以后 review 也为大家提供参考.</p>
+<a id="more"></a>
+<p>####安装包的组成<br>不废话直接上图:<br><img src="http://upload-images.jianshu.io/upload_images/1386980-f2658ee1a72abbe1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>来看看我们 APK 结构分布:<br>在 Android Studio 2.2.3 开始，就加入了浏览 APK 结构的功能，我们直接把安装包拖入 IDE ，就可以直接浏览其组成和对应大小，这样能够很方便的对比分析出每一步优化后的结果。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1386980-936eb50fbd397e01.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>如图, 资源文件和 lib 在 APK 中比例最高,所以重点拿这两个地方开刀.</p>
+<p>####第一刀: 资源文件的处理<br>因为公司的产品比较稳定,所以一些产品图我们保存在了 res 本地中,所以导致了 res 文件过大.其实最好的解决方法,当然是将比较大的产品图放在后台服务器,由于公司后台人员最近比较忙,而且对后台来说这个工程还是蛮大的,所以自己动手,丰衣足食咯…<br>我们项目中的所有图片都是 png 格式的,这点比较好了,关于图片处理,我首先想到的就是压缩了.虽然 png 和其他格式图片比,本身就比较轻量了,但是还是有很大压缩空间的,因为产品图,在我们项目中只是个缩略图,不需要高保真.<br>找到了几个压缩工具:</p>
+<ul>
+<li>ImageOptim：<a href="https://imageoptim.com/mac" target="_blank" rel="external">https://imageoptim.com/mac</a> ，支持压缩 PNG/JPEG/GIF ，而且效果显著，我用的就是这个工具.可以看看这里 <a href="https://www.diycode.cc/topics/496" target="_blank" rel="external">https://www.diycode.cc/topics/496</a> ，遗憾的是它只支持 Mac ，Windows 党很难过。</li>
+<li>TinyPNG：<a href="https://tinypng.com/" target="_blank" rel="external">https://tinypng.com/</a> ，支持对 PNG/JPEG 文件做压缩处理，效果不错。</li>
+<li>pngquant：<a href="https://pngquant.org/" target="_blank" rel="external">https://pngquant.org/</a> ， 支持 PNG 压缩，有时候 TinyPNG 处理过的图片噪点会稍多，可以考虑用 pngquant 来处理。<br>来看下效果:<br><img src="http://upload-images.jianshu.io/upload_images/1386980-d7cfc61d09725043.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>由于一些变量控制没做到位,所以效果显示稍差,实际 APK 大概减小2M<br>####第二刀: lib 处理<br>lib 中主要是一些第三方 sdk 中的 so 文件,Native 库瘦身主要是减小对 CPU 架构的支持.关于 CPU 架构支持,不了解的,传送门附上:<a href="https://zhuanlan.zhihu.com/p/23102158" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/23102158</a><br>出于好奇,分析了下微信的 APK 发现他的 lib 下只有 armeabi ,看过上篇文章就明白了.<br>来看下我们的 APK 吧:<br><img src="http://upload-images.jianshu.io/upload_images/1386980-9bb837738dc73c82.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>看到这个,瞬间来了精神,知道这块瘦身空间有多大了吧.<br>根据我们用户的机型分布,最终只保留了对 armeabi-v7a 支持.注意,这里需要根据自家产品的实际情况来决定。<br>配置起来很简单，在 build.gradle 使用 abiFilters 配置需要用到的 CPU 架构，并将不需要兼容的 so 文件从项目中移除即可。</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1386980-a094b9f025cd8ffe.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>####看一下成果:<br><img src="http://upload-images.jianshu.io/upload_images/1386980-492d500ef73f2a02.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/安卓/" rel="tag"># 安卓</a>
+          
+            <a href="/tags/优化/" rel="tag"># 优化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/09/记Hexo个人博客搭建/" rel="next" title="记Hexo个人博客搭建">
+                <i class="fa fa-chevron-left"></i> 记Hexo个人博客搭建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/23/Android启动优化/" rel="prev" title="做了个瘦身 hexo new ”Android启动优化">
+                做了个瘦身 hexo new ”Android启动优化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars3.githubusercontent.com/u/23710928?s=400&u=d2045e58dfd8ecab28842991a417765195a2ae66&v=4"
+                alt="LayneCui" />
+            
+              <p class="site-author-name" itemprop="name">LayneCui</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LayneCui" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://youtube.com/yourname" target="_blank" title="YouTube">
+                      
+                        <i class="fa fa-fw fa-youtube"></i>YouTube</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LayneCui</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

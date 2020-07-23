@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="安卓," />
+
+
+
+
+
+
+
+
+
+
+<meta name="keywords" content="安卓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android性能优化之总括篇">
+<meta property="og:url" content="http://mp.weixin.qq.com/s?__biz=MzI2MzU0MTgzNw==&mid=100000011&idx=1&sn=6abf17b44b49de680c76ec808719202f&chksm=6abb04295dcc8d3f88b62e54c44b02d5836c85c7a2a760ce999834579a5923d0d5b14c5ecf75&scene=18#rd/2017/05/23/Android性能优化之总括篇/index.html">
+<meta property="og:site_name" content="LayneCui's Blog">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1386980-490504712cc8a362.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1386980-62ec8091371ad2ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2020-07-23T08:57:09.353Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android性能优化之总括篇">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1386980-490504712cc8a362.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mp.weixin.qq.com/s?__biz=MzI2MzU0MTgzNw==&mid=100000011&idx=1&sn=6abf17b44b49de680c76ec808719202f&chksm=6abb04295dcc8d3f88b62e54c44b02d5836c85c7a2a760ce999834579a5923d0d5b14c5ecf75&scene=18#rd/2017/05/23/Android性能优化之总括篇/"/>
+
+
+
+
+
+  <title>Android性能优化之总括篇 | LayneCui's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LayneCui's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">人懒爱玩，不易相处</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://mp.weixin.qq.com/s?__biz=MzI2MzU0MTgzNw==&mid=100000011&idx=1&sn=6abf17b44b49de680c76ec808719202f&chksm=6abb04295dcc8d3f88b62e54c44b02d5836c85c7a2a760ce999834579a5923d0d5b14c5ecf75&scene=18#rd/2017/05/23/Android性能优化之总括篇/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LayneCui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/23710928?s=400&u=d2045e58dfd8ecab28842991a417765195a2ae66&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LayneCui's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Android性能优化之总括篇</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-23T16:49:01+08:00">
+                2017-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://upload-images.jianshu.io/upload_images/1386980-490504712cc8a362.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<a id="more"></a>
+<p>本文先总括Android性能优化的主要几个方面，后续再逐条详细说明。</p>
+<h2 id="1-启动页面优化："><a href="#1-启动页面优化：" class="headerlink" title="1.启动页面优化："></a>1.启动页面优化：</h2><ul>
+<li>启动页面网络请求优化（可以根据启动页面所需，有针对的优化网络请求）</li>
+<li>启动页面特效优化（添加启动动画，在视觉效果上造成“启动页面加载速度很快”的效果）</li>
+<li>启动页面无黑屏（配合Android Theme使用）</li>
+<li>Application启动速度优化（尽量不将一些业务逻辑放于Application中）</li>
+<li>启动页返回键的屏蔽</li>
+</ul>
+<h2 id="2-布局优化："><a href="#2-布局优化：" class="headerlink" title="2.布局优化："></a>2.布局优化：</h2><ul>
+<li><p>减少布局文件的层级（测量、布局、绘制的时间减少）：可以使用RelativeLayout来减少嵌套，从而达到减少层级的目的，另外在相同层级的情况下使用LinearLayout(相比RelativeLayout更高效)</p>
+</li>
+<li><p>使用include标签复用，merge标签降低层级，ViewStub来实现懒加载，另外Space用来可以占位。</p>
+</li>
+</ul>
+<h2 id="3-绘制优化"><a href="#3-绘制优化" class="headerlink" title="3.绘制优化"></a>3.绘制优化</h2><ul>
+<li>减少太多重叠的背景</li>
+<li>减少太多层叠的View</li>
+<li>减少复杂的Layout层级<br>注：设置-&gt;其它高级设置-&gt;开发者选项-&gt;调试CPU过度绘制，可以查看过度绘制</li>
+</ul>
+<h2 id="4-内存泄漏优化："><a href="#4-内存泄漏优化：" class="headerlink" title="4.内存泄漏优化："></a>4.内存泄漏优化：</h2><p>参考之前文章：<a href="http://www.jianshu.com/p/2511077ba946" target="_blank" rel="external">http://www.jianshu.com/p/2511077ba946</a></p>
+<h2 id="5-优化工具介绍："><a href="#5-优化工具介绍：" class="headerlink" title="5.优化工具介绍："></a>5.优化工具介绍：</h2><p><img src="http://upload-images.jianshu.io/upload_images/1386980-62ec8091371ad2ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<ul>
+<li>StrictMode:<br>主要用来做主线程优化分析，开启StrictMode后, 如果线程中做一些诸如读写文件,，网络访问等操作，将会在Log console输出一些警告， 警告信息包含Stack Trace来显示哪个地方出了问题。文档：<a href="https://developer.android.com/reference/android/os/StrictMode.html" target="_blank" rel="external">https://developer.android.com/reference/android/os/StrictMode.html</a></li>
+<li>SystraceMode:<br>Systrace是一个收集和检测时间信息的工具，它能显示CPU和时间被消耗在哪儿了，每个进程和线程都在其CPU时间片内做了什么事儿。而且会指示哪个地方出了问题, 以及给出Fix建议。用来分析UI的绘制时间，结合Hierarchy Viewer来提升UI性能。也可以用来发现耗时操作。<br>文档：<br><a href="https://developer.android.com/studio/profile/systrace.html" target="_blank" rel="external">https://developer.android.com/studio/profile/systrace.html</a><br><a href="https://developer.android.com/studio/profile/systrace-walkthru.html" target="_blank" rel="external">https://developer.android.com/studio/profile/systrace-walkthru.html</a><br><a href="https://developer.android.com/studio/profile/systrace-commandline.html?hl=fy" target="_blank" rel="external">https://developer.android.com/studio/profile/systrace-commandline.html?hl=fy</a></li>
+<li>Hierarchy Viewer:<br>Hierarchy Viewer提供了一个可视化的界面来观测布局的层级，让我们可以优化布局层级，删除多余的不必要的View层级，提升布局速度。用来做View层级分析，可以分析出View Tree中的性能阻塞点，以便对症下药，提升布局性能。Hierarchy Viewer需要Root的机器(产品机没有开启ViewServer)才可以执行。可以使用第三方的开源的ViewServer来协助我们在未Root的机器上使用Hierarchy Viewer分析。</li>
+<li>TraceView<br>一个图形化的工具, 用来展示和分析方法的执行时间.<br>文档:<br><a href="https://developer.android.com/studio/profile/traceview.html" target="_blank" rel="external">https://developer.android.com/studio/profile/traceview.html</a><br><a href="https://developer.android.com/studio/profile/traceview-walkthru.html" target="_blank" rel="external">https://developer.android.com/studio/profile/traceview-walkthru.html</a></li>
+<li>Memory Monitor:<br>内存使用检测器，可以实时检测当前Application的内存使用和释放等信息，并以图形化界面展示.用来做内存分析，内存泄露排查的不二之选。可以结合heap viewer，allocation tracker来分析，可以导出hprof文件结合第三方的MAT工具分析泄露点。</li>
+<li>Other Motinor:<br>Android Studio的Monitor还提供了其他三个Motinor — CPU, GPU, Network.分别用来跟踪监测CPU,GPU和Network的使用极其变化, 可以作为网络优化, 流量优化和渲染优化等的一个指导.<br>文档:<br><a href="https://developer.android.com/studio/profile/am-cpu.html" target="_blank" rel="external">https://developer.android.com/studio/profile/am-cpu.html</a><br><a href="https://developer.android.com/studio/profile/am-gpu.html" target="_blank" rel="external">https://developer.android.com/studio/profile/am-gpu.html</a><br><a href="https://developer.android.com/studio/profile/am-network.html" target="_blank" rel="external">https://developer.android.com/studio/profile/am-network.html</a></li>
+</ul>
+<h2 id="6-反射优化："><a href="#6-反射优化：" class="headerlink" title="6.反射优化："></a>6.反射优化：</h2><ul>
+<li>在代码中减少反射调用；</li>
+<li>对频繁调用的返回值进行Cache；</li>
+</ul>
+<h2 id="7-稳定性优化："><a href="#7-稳定性优化：" class="headerlink" title="7.稳定性优化："></a>7.稳定性优化：</h2><ul>
+<li>连续48小时monkey不应出现闪退，anr问题。</li>
+<li>如果应用接入了数据埋点的sdk，比如百度统计sdk等，这些sdk都会将应用的崩溃信息上报回来，开发者应每天关注这些统计到的崩溃日志，严格控制应用的崩溃率；</li>
+</ul>
+<h2 id="8-耗电优化："><a href="#8-耗电优化：" class="headerlink" title="8.耗电优化："></a>8.耗电优化：</h2><ul>
+<li>应用进入后台后不应异常消耗电量；</li>
+<li>操作应用后，退出应用，让应用处于后台，一段时间后通过<code>adb shell dumpsys batterystats</code>查看电量消耗日志看是否存在异常。</li>
+</ul>
+<h2 id="9-其他优化："><a href="#9-其他优化：" class="headerlink" title="9.其他优化："></a>9.其他优化：</h2><ul>
+<li>慎用异常,异常对性能不利</li>
+<li>Adapter优化</li>
+<li>节制地使用Service等等<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><a href="http://blog.tingyun.com/web/article/detail/155" target="_blank" rel="external">http://blog.tingyun.com/web/article/detail/155</a><br><a href="http://blog.tingyun.com/web/article/detail/155" target="_blank" rel="external">http://blog.tingyun.com/web/article/detail/155</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/安卓/" rel="tag"># 安卓</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/23/Java内存简介和Android内存泄漏相关/" rel="next" title="Java内存简介和Android内存泄漏相关">
+                <i class="fa fa-chevron-left"></i> Java内存简介和Android内存泄漏相关
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/09/记Hexo个人博客搭建/" rel="prev" title="记Hexo个人博客搭建">
+                记Hexo个人博客搭建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars3.githubusercontent.com/u/23710928?s=400&u=d2045e58dfd8ecab28842991a417765195a2ae66&v=4"
+                alt="LayneCui" />
+            
+              <p class="site-author-name" itemprop="name">LayneCui</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LayneCui" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://youtube.com/yourname" target="_blank" title="YouTube">
+                      
+                        <i class="fa fa-fw fa-youtube"></i>YouTube</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-启动页面优化："><span class="nav-number">1.</span> <span class="nav-text">1.启动页面优化：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-布局优化："><span class="nav-number">2.</span> <span class="nav-text">2.布局优化：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-绘制优化"><span class="nav-number">3.</span> <span class="nav-text">3.绘制优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-内存泄漏优化："><span class="nav-number">4.</span> <span class="nav-text">4.内存泄漏优化：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-优化工具介绍："><span class="nav-number">5.</span> <span class="nav-text">5.优化工具介绍：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-反射优化："><span class="nav-number">6.</span> <span class="nav-text">6.反射优化：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-稳定性优化："><span class="nav-number">7.</span> <span class="nav-text">7.稳定性优化：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-耗电优化："><span class="nav-number">8.</span> <span class="nav-text">8.耗电优化：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-其他优化："><span class="nav-number">9.</span> <span class="nav-text">9.其他优化：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考："><span class="nav-number">10.</span> <span class="nav-text">参考：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LayneCui</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

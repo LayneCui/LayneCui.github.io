@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="安卓," />
+
+
+
+
+
+
+
+
+
+
+<meta name="keywords" content="安卓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="做了个瘦身 hexo new ”Android启动优化">
+<meta property="og:url" content="http://mp.weixin.qq.com/s?__biz=MzI2MzU0MTgzNw==&mid=100000011&idx=1&sn=6abf17b44b49de680c76ec808719202f&chksm=6abb04295dcc8d3f88b62e54c44b02d5836c85c7a2a760ce999834579a5923d0d5b14c5ecf75&scene=18#rd/2016/10/23/Android启动优化/index.html">
+<meta property="og:site_name" content="LayneCui's Blog">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1386980-a3e56e28c5421227.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1386980-d0c257eaf12c8112.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2020-07-23T09:03:30.605Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="做了个瘦身 hexo new ”Android启动优化">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1386980-a3e56e28c5421227.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mp.weixin.qq.com/s?__biz=MzI2MzU0MTgzNw==&mid=100000011&idx=1&sn=6abf17b44b49de680c76ec808719202f&chksm=6abb04295dcc8d3f88b62e54c44b02d5836c85c7a2a760ce999834579a5923d0d5b14c5ecf75&scene=18#rd/2016/10/23/Android启动优化/"/>
+
+
+
+
+
+  <title>做了个瘦身 hexo new ”Android启动优化 | LayneCui's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LayneCui's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">人懒爱玩，不易相处</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://mp.weixin.qq.com/s?__biz=MzI2MzU0MTgzNw==&mid=100000011&idx=1&sn=6abf17b44b49de680c76ec808719202f&chksm=6abb04295dcc8d3f88b62e54c44b02d5836c85c7a2a760ce999834579a5923d0d5b14c5ecf75&scene=18#rd/2016/10/23/Android启动优化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LayneCui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/23710928?s=400&u=d2045e58dfd8ecab28842991a417765195a2ae66&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LayneCui's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">做了个瘦身 hexo new ”Android启动优化</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-23T16:49:37+08:00">
+                2016-10-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://upload-images.jianshu.io/upload_images/1386980-a3e56e28c5421227.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Android大保健"></p>
+<a id="more"></a>
+<blockquote>
+<p>下面有一篇关于Android Application启动流程分析的译文推荐<br><a href="http://gold.xitu.io/post/582583c95bbb50005915045a" target="_blank" rel="external">Android Application 启动流程分析</a></p>
+</blockquote>
+<p>##一、基础知识</p>
+<ul>
+<li>####冷启动：<blockquote>
+<p>当后台不存在该应用的任何进程或者服务时，用户点击icon图标启动，我们称之为冷启动。</p>
+</blockquote>
+</li>
+<li>####热启动：<blockquote>
+<p>当后台存在该应用的进程或者服务时，用户点击icon图标启动，我们称之为热启动。一般是用户按了home键回到桌面，或者返回键没有杀进程，或者app本身做了进程重启的机制。</p>
+</blockquote>
+</li>
+<li>####启动组成时间<br>我们主要优化冷启动时间，只要冷启动时间优化了，热启动其实也跟着优化了。<br>冷启动时间分布如下：<br>1.application启动时间+欢迎页停留时间<br>2.按用户体验的启动时间应该是：<br>application启动时间+欢迎页停留时间+进入主页后显示主题的时间；</li>
+</ul>
+<p>##二、优化项目</p>
+<p>####1.Application的启动优化（兵家必争之地）<br>Application启动会经过<code>attachBaseContext--&gt;onCreate;</code><br>这两个方法不执行完是不会出现lanucher页面的；所以用户反馈点击图片后，要过一会才出现欢迎页的原因以下几个：<br> 1、这两个方法太过费时导致的。<br>2、application的Theme被设置会透明的（系统一般默认有个白色或者黑色的）<br>3、对启动页不要做自定义动画，效果没有原生的好，会有一点点影响。</p>
+<h6 id="attachBaseContext优化"><a href="#attachBaseContext优化" class="headerlink" title="attachBaseContext优化"></a>attachBaseContext优化</h6><p>这个方法在没有MultiDex的app中或者没有特殊业务的app中一般是不用重写的，但是如果业务需要我们的app需要集成MultiDex，导致我们需要在此方法里进行MultiDex.install操作,这个操作其实是耗时的，没办法优化，但是也不能让用户傻等。</p>
+<ul>
+<li><h6 id="1-初次启动优化"><a href="#1-初次启动优化" class="headerlink" title="1.初次启动优化"></a>1.初次启动优化</h6>我们知道5.0以下初次安装启动需要进行dexopt的过程，这个过程是非常耗时的，在一些比较低端的机子上甚至能到达20秒，而且只能在主UI线程进行，如果我们直接执行install的话，很有可能出现ANR,黑屏，等各种非常不好的体验，怎么办呢？<br>我们可以绕过我们的主进程:<br>我们开启一个新的进程用于install操作，并弹出一个欢迎页；然后再我们的主线程一直检测是否安装完成，超时时间设置为30秒；完成之后弹出主进程的欢迎页面（注意：为了让用户无感知，这两个页面必须一模一样，且中间不能用过渡动画）。<br>经过实践：基本上这套方案可以适用所有目前兼容的机型。</li>
+<li><h6 id="2-Application-Theme建议设置为透明的（处于用户体验的考虑）onCreate优化"><a href="#2-Application-Theme建议设置为透明的（处于用户体验的考虑）onCreate优化" class="headerlink" title="2.Application Theme建议设置为透明的（处于用户体验的考虑）onCreate优化"></a>2.Application Theme建议设置为透明的（处于用户体验的考虑）onCreate优化</h6>每次Application启动或者重启的时候都会触发<code>onCreate</code>；如果这个方法耗时超过500ms的话，你可以很明显的感受到点击icon之后，欢迎页不会立刻展示出来。<br>然而不幸的是，很多第三方的组件，如友盟等等都需要在此进行初始化，原因是防止进程被回收之后他们还有机会进行重新初始化而不影响业务。<br>原因上我们可以接受，但一旦初始化耗费时间多少完全无法控制，完全看第三方“良心”了，但即使在 我们既无法改变第三方初始化速度慢的问题，也不能将其从Application移除的情况下，我们依然要优化启动速度，因为用户体验实在太重要。<h6 id="3-解决问题"><a href="#3-解决问题" class="headerlink" title="3.解决问题"></a>3.解决问题</h6>优化思路：最大的优化思路就是onCreate什么都不执行，先让欢迎页弹窗出来；这个想法初步很简单，也很好实现，然而存在几个问题：<br>（1）进程被回收重启后，如何重新初始化？<br>（2）通知栏推送后，进入到目的页面，如何防止因为没初始化导致的闪退或者功能异常？<br>（3）application oncreate什么都不做，那初始化放在哪里做呢？<br>只要这两个问题解决了，基本上application的优化就算完成了，怎么解决呢，我们采用了下面的办法 我们在application只干了一件事，而且几乎不费时，它就是：监听页面的生命周期:<br>######registerActivityLifecycleCallbacks<br>这个方法可以让我们监听所有页面的生命周期，包括启动，可见，销毁等等，而启动的时候android本身带了一个参数 <code>public void onActivityCreated(Activity activity, Bundle savedInstanceState)；</code>中的<code>Bundle</code>，如果<code>Bundle</code>不为空，说明是回收回来的，我们可以在这里进行重新初始化，而不影响其他功能；因此（1）（2）问题迎刃而解； 关于（3）的问题是正常流程问题，如果放在欢迎页初始化，是不妥的，并不是所有的入口都走欢迎页； 所以我们在Application接收了一个初始化的事件，只要收到这个事件，就可以进行初始化，初始化完了之后，再发出初始化完成的通知； （其实这一步是为了优化欢迎页做的准备，继续往下看。）</li>
+</ul>
+<p>Application通过以上几步优化之后，就只剩下5.0以下MultiDex和multidex.install消耗的时间优化的，要做到不执行Multi.install多个dex，只能自己动态实现dex的加载，也就是插件化，还有一段很长的路要走，继续往下说。</p>
+<p>####2.启动页启动优化（用户可见的第一感知）<br>Application优化完了以后，就会执行启动页的<code>onCreate（）,我们发现</code>onCreate（）`一旦耗时，也会导致启动页有一瞬间的卡顿，精益求精，我们把启动页的启动逻辑延迟初始化并通知Application进行初始化，然后等待Application初始化完成的事件之后，继续往下走，直到进入主页； 启动页的优化逻辑比较简单，只是纯业务的上的调整。</p>
+<p>####3.主页优化<br>主要优化onCreate即可。把可以放线程初始化的都放到线程里去。</p>
+<p>##三、总结<br>经过以上几步优化之后，我们发现启动速度有了非常明显的提示，其实大部分的时候都花在了业务的整理和Application启动的优化上边，比较容易出bug的地方是我们相当于改变了应该在Appliation <code>oncreate()</code>初始化方式，由于有些组件初始化是异步的，还是可能出现初始化未完成就被使用的情况，这需要业务上进行相关的处理。<br>总的来说，对于一个比较大型的app的启动逻辑还是蛮复杂的，有必要的话都需要整理并优化一下，欢迎大家吐槽，共勉。</p>
+<p>#####关于我：</p>
+<ul>
+<li>公众号：<br><img src="http://upload-images.jianshu.io/upload_images/1386980-d0c257eaf12c8112.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="qrcode_for_gh_627f56ce1a9d_430.jpg"></li>
+</ul>
+<ul>
+<li>微信：cui1263570368</li>
+<li>qq：1263570368</li>
+<li>邮箱：1263570368@qq.com</li>
+<li>blog: <a href="https://github.com/ylxx" target="_blank" rel="external">https://github.com/ylxx</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/安卓/" rel="tag"># 安卓</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/23/我对公司-APK-做了个瘦身/" rel="next" title="我对公司 APK 做了个瘦身">
+                <i class="fa fa-chevron-left"></i> 我对公司 APK 做了个瘦身
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars3.githubusercontent.com/u/23710928?s=400&u=d2045e58dfd8ecab28842991a417765195a2ae66&v=4"
+                alt="LayneCui" />
+            
+              <p class="site-author-name" itemprop="name">LayneCui</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LayneCui" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://youtube.com/yourname" target="_blank" title="YouTube">
+                      
+                        <i class="fa fa-fw fa-youtube"></i>YouTube</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#attachBaseContext优化"><span class="nav-number">1.</span> <span class="nav-text">attachBaseContext优化</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#1-初次启动优化"><span class="nav-number">2.</span> <span class="nav-text">1.初次启动优化</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-Application-Theme建议设置为透明的（处于用户体验的考虑）onCreate优化"><span class="nav-number">3.</span> <span class="nav-text">2.Application Theme建议设置为透明的（处于用户体验的考虑）onCreate优化</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-解决问题"><span class="nav-number">4.</span> <span class="nav-text">3.解决问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LayneCui</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
