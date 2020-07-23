@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JVM," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="###说明接下来会用三个篇幅来学习总结 JVM，所涉及内容如下图：  定义 JVM 全称 Java Virtual Machine，也就是我们耳熟能详的 Java 虚拟机。它能识别 .class后缀的文件，并且能够将其解析成具体的机器指令，最终调用操作系统上的函数，完成我们想要的操作。  特性JVM 的存在使得 Java 程序具有运行平台无关性的特点。 JVM、JRE、JDK 的关系JVM只是一个">
+<meta name="keywords" content="JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM（ 上）">
+<meta property="og:url" content="http://mp.weixin.qq.com/s?__biz=MzI2MzU0MTgzNw==&mid=100000011&idx=1&sn=6abf17b44b49de680c76ec808719202f&chksm=6abb04295dcc8d3f88b62e54c44b02d5836c85c7a2a760ce999834579a5923d0d5b14c5ecf75&scene=18#rd/2020/07/23/JVM（上）/index.html">
+<meta property="og:site_name" content="LayneCui's Blog">
+<meta property="og:description" content="###说明接下来会用三个篇幅来学习总结 JVM，所涉及内容如下图：  定义 JVM 全称 Java Virtual Machine，也就是我们耳熟能详的 Java 虚拟机。它能识别 .class后缀的文件，并且能够将其解析成具体的机器指令，最终调用操作系统上的函数，完成我们想要的操作。  特性JVM 的存在使得 Java 程序具有运行平台无关性的特点。 JVM、JRE、JDK 的关系JVM只是一个">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-20ee3af5c4458c45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-32fd90730b2da968.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-08fe09aa9c15953d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-d2b5529cfdb4ab0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-464fc228fa3b85e0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-aa62f9977a7584c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-dc76f1d3c2a715fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-c23df529e0ed1402.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1386980-3de6f18afaae63a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2020-07-23T09:07:57.924Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JVM（ 上）">
+<meta name="twitter:description" content="###说明接下来会用三个篇幅来学习总结 JVM，所涉及内容如下图：  定义 JVM 全称 Java Virtual Machine，也就是我们耳熟能详的 Java 虚拟机。它能识别 .class后缀的文件，并且能够将其解析成具体的机器指令，最终调用操作系统上的函数，完成我们想要的操作。  特性JVM 的存在使得 Java 程序具有运行平台无关性的特点。 JVM、JRE、JDK 的关系JVM只是一个">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1386980-20ee3af5c4458c45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mp.weixin.qq.com/s?__biz=MzI2MzU0MTgzNw==&mid=100000011&idx=1&sn=6abf17b44b49de680c76ec808719202f&chksm=6abb04295dcc8d3f88b62e54c44b02d5836c85c7a2a760ce999834579a5923d0d5b14c5ecf75&scene=18#rd/2020/07/23/JVM（上）/"/>
+
+
+
+
+
+  <title>JVM（ 上） | LayneCui's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LayneCui's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">人懒爱玩，不易相处</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://mp.weixin.qq.com/s?__biz=MzI2MzU0MTgzNw==&mid=100000011&idx=1&sn=6abf17b44b49de680c76ec808719202f&chksm=6abb04295dcc8d3f88b62e54c44b02d5836c85c7a2a760ce999834579a5923d0d5b14c5ecf75&scene=18#rd/2020/07/23/JVM（上）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LayneCui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/23710928?s=400&u=d2045e58dfd8ecab28842991a417765195a2ae66&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LayneCui's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">JVM（ 上）</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-23T17:06:59+08:00">
+                2020-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>###<strong>说明</strong><br>接下来会用三个篇幅来学习总结 JVM，所涉及内容如下图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1386980-20ee3af5c4458c45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a><strong>定义</strong></h3><blockquote>
+<p>JVM 全称 Java Virtual Machine，也就是我们耳熟能详的 Java 虚拟机。它能识别 .class后缀的文件，并且能够将其解析成具体的机器指令，最终调用操作系统上的函数，完成我们想要的操作。</p>
+</blockquote>
+<h4 id="特性"><a href="#特性" class="headerlink" title="特性"></a><strong>特性</strong></h4><p>JVM 的存在使得 Java 程序具有运行平台无关性的特点。</p>
+<h4 id="JVM、JRE、JDK-的关系"><a href="#JVM、JRE、JDK-的关系" class="headerlink" title="JVM、JRE、JDK 的关系"></a><strong>JVM、JRE、JDK 的关系</strong></h4><p>JVM只是一个翻译，把Class翻译成机器识别的代码，但是需要注意，JVM 不会自己生成代码，需要大家编写代码，同时需要很多依赖类库，这个时候就需要用到JRE。</p>
+<p>JRE是什么，它除了包含JVM之外，提供了很多的类库（就是我们说的jar包，它可以提供一些即插即用的功能，比如读取或者操作文件，连接网络，使用I/O等等之类的）这些东西就是JRE提供的基础类库。JVM 标准加上实现的一大堆基础类库，就组成了 Java 的运行时环境，也就是我们常说的 JRE（Java Runtime Environment）。</p>
+<p>但对于程序员来说，JRE还不够。我写完要编译代码，还需要调试代码，还需要打包代码、有时候还需要反编译代码。所以我们会使用JDK，因为JDK还提供了一些非常好用的小工具，比如 javac（编译代码）、java、jar （打包代码）、javap（反编译&lt;反汇编&gt;）等。这个就是JDK。</p>
+<p>其实他们是种包含关系，如下图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1386980-32fd90730b2da968.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h3 id="角色"><a href="#角色" class="headerlink" title="角色"></a><strong>角色</strong></h3><p>Java程序运行在操作系统上，JVM 的作用是将源程序编译后的class、jar 包等字节码文件，翻译生成机器指令。如下图：<br><img src="https://upload-images.jianshu.io/upload_images/1386980-08fe09aa9c15953d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h3 id="构成"><a href="#构成" class="headerlink" title="构成"></a><strong>构成</strong></h3><p>JVM 是由，类装载器子系统、运行时数据区、执行引擎、本地方法接口和垃圾收集模块等五大模块组成。如下图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1386980-d2b5529cfdb4ab0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h4 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h4><p>单独成章</p>
+<h4 id="执行引擎"><a href="#执行引擎" class="headerlink" title="执行引擎"></a>执行引擎</h4><p>单独成章</p>
+<h4 id="本地方法接口"><a href="#本地方法接口" class="headerlink" title="本地方法接口"></a>本地方法接口</h4><p>后续单独成章</p>
+<h4 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h4><p>见 JVM（下）</p>
+<h4 id="运行时数据区"><a href="#运行时数据区" class="headerlink" title="运行时数据区"></a>运行时数据区</h4><p>见上图，运行时数据区是在程序运行过程中操作系统划分给 JVM 的一块内存区域，分为 5 个部分，虚拟机栈、本地方法栈、程序计数器、堆和方法区。这 5 部分又归为 2 种，其中前 3 个为线程独有区，而堆和方法区为线程共享区域。</p>
+<h5 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h5><p>每个线程都有一个单独的程序计数器，用来记录当前线程执行的字节码的位置。其实如果不考虑 OS 多线程的话，是不需要程序计数器的，一个线程可以直接跑完结束。但是现实情况同时运行的线程数目大于 OS 核心数 *2 时，就需要 CPU 时间片轮转来分配线程轮流执行，这个时候就需要它来记录每个线程的执行位置了。它有以下几个特点需要注意：</p>
+<ul>
+<li>程序计数器具有线程隔离性</li>
+<li>程序计数器占用的内存空间非常小，可以忽略不计，而且它是运行时数据区唯一不会出现 OOM 的区域</li>
+<li>程序执行的时候，程序计数器是有值的，其记录的是程序正在执行的字节码的地址</li>
+<li>执行native本地方法时，程序计数器的值为空。原因是native方法是java通过jni调用本地C/C++库来实现，非java字节码实现，所以无法统计</li>
+</ul>
+<h5 id="虚拟机栈"><a href="#虚拟机栈" class="headerlink" title="虚拟机栈"></a>虚拟机栈</h5><p>栈，是一种后入先出的数据结构，其中存放一个或者多个，当前线程正在执行的方法包装成的栈帧，这些栈帧是按照后入在上的顺序存放的。当前执行的栈帧在最上边。每个栈帧是由局部变量表、操作数栈、动态链接、完成出口组成的。如下虚拟机栈示意图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1386980-464fc228fa3b85e0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>我们来写一段代码，来看一下，方法是怎样在栈中执行的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">work</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> x = <span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> y = <span class="number">2</span>;</div><div class="line">    <span class="keyword">int</span> z = (x + y)*<span class="number">10</span>;</div><div class="line">    <span class="keyword">return</span> z;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">    Person person = <span class="keyword">new</span> Person();</div><div class="line">    person.work();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们将上边代码在编辑器运行一遍，在项目根目录的 out文件夹下对应的包名会有编译好的 Person.class 文件，找到该文件拖到终端命令行，class 文件同级目录下执行<code>javap -c Person.class</code> 反汇编命令，会在终端得到该段代码的汇编指令如下：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1386980-aa62f9977a7584c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>我们先口述一下这段代码的执行过程：</p>
+<p>1、<code>main-code-0: new</code> 首先 JVM 会先将这个 Person.class 元数据加载到 内存中的方法区 (Method Area) 中（信息都包括常量池信息，方法的定义 以及编译后的方法实现的二进制形式的机器指令，所有的线程共享一个方法区，从中读取方法定义和方法的指令集），将其引用压入操作数栈（new指令并不能完全创建一个对象，对象只有在初，只有在调用初始化方法完成后（也就是调用了invokespecial指令之后），对象才创建成功）</p>
+<p>2、<code>main-code-3: dup</code> 将操作数栈定的数据复制一份，并压入栈，此时栈中有两个引用值</p>
+<p>3、<code>main-code-4: invokespecial</code> pop出栈引用值,调用其构造函数，完成对象的初始化</p>
+<p>4、<code>main-code-7: astore_1</code>pop出栈引用值，将 person 赋值给局部变量表中的 index = 1的位置</p>
+<p>5、<code>main-code-8: aload_1</code>将局部变量表中的 person 压入栈，因为 person 调用了 work方法</p>
+<p>6、<code>main-code-9: invokespecial</code>将 person 出栈，调用 main 中的 invokespecial 指令：</p>
+<p>首先进行<strong>方法符号引用校验</strong>，查找是否有 work() 这个方法的定义</p>
+<p>然后<strong>为新的方法调用创建新的栈帧</strong>，JVM 会为此方法 greeting 创建一个新的栈帧(VM stack)，并根据 greeting 中操作数栈的大小和局部变量的数量分别创建相应大小的操作数栈；然后将此栈帧推到虚拟机栈的栈顶。</p>
+<p><strong>更新PC指令计数器的值</strong>，将当前 PC 程序计数器的值记录到 greeting 栈帧中，当 greeting 执行完成后，以便恢复PC值。更新PC的值，使下一条执行的指令地址指向 greeting 方法的指令开始部分。<br>这条语句会使当前的 main 方法执行暂停，使 JVM 进入对 greeting 方法的执行当中当 greeting 方法执行完成后，才会恢复 PC 程序计数器的值指向当前下一条指令。</p>
+<p>7、此时，main 方法的栈帧被压在下边，work 方法的栈帧在栈顶开始执行</p>
+<p>8、以下截图为 work 方法的执行过程：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1386980-dc76f1d3c2a715fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>work 栈帧执行时示意图如下所示：<br><img src="https://upload-images.jianshu.io/upload_images/1386980-c23df529e0ed1402.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>9、<code>work-code-12: ireturn</code> 将计算结果出栈并且压入到该方法的调用的栈中也就是 main 的栈帧的操作数栈中，将 work 栈帧弹出</p>
+<p>10、<code>main-code-12: pop</code>将栈顶数值弹出</p>
+<p>11、<code>main-code-13: return</code> 方法执行结束，main 栈帧弹出</p>
+<ul>
+<li><p>还可以参考<a href="https://www.jianshu.com/p/6a8997560b05" target="_blank" rel="external">其他示例</a></p>
+<h5 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h5><p>本地方法栈跟 Java 虚拟机栈的功能类似，Java 虚拟机栈用于管理 Java 函数的调用，而本地方法栈则用于管理本地方法的调用。但本地方法并不是用 Java 实现的，而是由 C 语言实现的。</p>
+<h5 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h5><p>堆是 JVM 上最大的内存区域，这块区域该进程的所有线程共享，我们申请的几乎所有的对象和数组，都是在这里存储的。我们常说的垃圾回收，操作的对象就是堆。堆空间一般是程序启动时，就申请了，但是并不一定会全部使用。</p>
+<p>那一个对象创建的时候，到底是在堆上分配，还是在栈上分配呢？这和两个方面有关：对象的类型和在 Java 类中存在的位置。</p>
+<p>Java 的对象可以分为基本数据类型和普通对象。</p>
+<p>对于普通对象来说，JVM 会首先在堆上创建对象，然后在其他地方使用的其实是它的引用。比如，把这个引用保存在虚拟机栈的局部变量表中。</p>
+<p>对于基本数据类型来说（byte、short、int、long、float、double、char)，有两种情况。当你在方法体内声明了基本数据类型的对象，它就会在栈上直接分配。其他情况，都是在堆上分配。</p>
+<h5 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h5><p><strong>1、方法区的发展过程</strong></p>
+<p>方法区存放类信息、静态变量、常量和即时编译器编译后的代码等线程共享数据。</p>
+<p>我个人在学习 JVM 分区中感觉方法区是最不容易理解的，因为需要动态的去观察它的变化。</p>
+<p>方法区经常被称作永久代和静态存储区，其实HotSpot 虚拟机在 JDK8 以前使用永久代来实现方法区，但在其它虚拟机中，例如，Oracle 的 JRockit、IBM 的 J9 就不存在永久代一说。因此，方法区只是 JVM 中规范的一部分，可以说，在 HotSpot 虚拟机中，设计人员使用了永久代来实现了 JVM 规范的方法区。</p>
+<p>在JDk8中，取消了永久代，用元空间代替之。也就是说，用元空间来实现方法区。</p>
+<p>为什么要用元空间代替永久区：</p>
+<ul>
+<li><p>字符串存在永久代中，容易出现性能问题和内存溢出</p>
+</li>
+<li><p>永久代大小不容易确定，PermSize 指定太小容易造成永久代OOM</p>
+</li>
+<li><p>永久代会为 GC 带来不必要的复杂度，并且回收效率偏低</p>
+</li>
+<li><p>便于将 HotSpot 与 JRockit 合二为一 (JRockit 中并没有永久代)</p>
+</li>
+</ul>
+<p><strong>2、方法区的组成</strong></p>
+<p>方法区经常和静态变量、常量池等，同时出现，而常量池，又有静态常量池、动态常量池、字符串常量池、class文件常量池等，而这些常量还可以分为字面量和符号引用两类。而类信息是不是都保存在常量池中？这些概念很多，逻辑也比较乱，我们需要好好捋一捋。先分别看一下上边的概念</p>
+<ul>
+<li><p>常量是指用 final 修饰的成员变量，值一旦给定就无法改变</p>
+</li>
+<li><p>java 3 种变量及其存放位置分别为 <strong>静态变量</strong>（独立于方法之外的变量，用 static 修饰）存放在方法区，<strong>实例变量</strong>（方法外部，无 static 修饰）作为对象的一部分，存放在堆中，<strong>局部变量</strong>（方法内部变量）保存于栈中，栈随线程的创建而被分配。</p>
+</li>
+<li><p>final 修饰的 3 种变量都会将字面量或者引用放置到方法区的静态常量池中，此处能展开，如果修饰的是基本类型数据，则方法区常量池存放的是字面量，但如果是对象引用或者 String，在执行时会将字符引用替换成直接引用并且将其移至动态常量池中。</p>
+</li>
+<li><p>字面量包括：文本字符串、final 修饰的常量、基本数据类型的值</p>
+</li>
+<li><p>符号引用包括：类和接口的全限定名、字段的名称和描述符、方法的名称和描述符</p>
+</li>
+<li><p>字符串常量池中存放字符串的引用，字符串对象存放在堆中。此处也可以展开，字符串有两种创建方式分别为：<code>String str=“abc”;</code> 和 <code>String str = new String(“abc”)；</code> 这两种是有区别的，前者会优先去常量池中寻找，如果找到，直接返回，找不到才会去创建。后者在类加载时会先创建一个 “abc” 的字符串创建在常量池中，在执行到 new 才会调用 String 的构造函数，同时 String 对象中的 char 数组将会引用常量池中字符串，在堆内存中创建一个 String 对象，最后，str 将引用 String 对象 。这个过程需要好好理解一下。</p>
+</li>
+<li><p>class 文件常量池存放类的元数据比如，类的方法代码、访问权限、全限定名等。 class 对象是在堆中的。</p>
+</li>
+</ul>
+<p><strong>3、总结：</strong></p>
+<p>以上这些比较分散混乱，我们来对照类的加载过程简单做一下总结，我们这里只关注在类的生命周期中，方法区中数据的变化，不过多讨论类的生命周期。</p>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/1386980-3de6f18afaae63a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>加载：在加载之前，堆中的 classloader 其实已经将 A 的元数据装载到了方法区，这时方法区已经将类信息、字段信息、方法信息等放到了静态常量池中，加载其实是对应汇编指令<code>invokespecial</code> 的，此时应该是执行了 new A(); jvm 会根据方法区中的类的全限命名获取该类的二进制流，并且将此二进制流静态的存储结构转化为运行时数据结构，还会在堆中创建一个 A.class 的对象作为此方法区中此类各种数据的访问入口。</p>
+<p>验证：此过程是验证二进制流是否符合虚拟机的各项规范方法区的值并没有变化</p>
+<p>准备：此过程 JVM 为类的静态变量分配内存并初始化为默认值</p>
+<p>解析：该阶段把类在常量池中的符号引用转为直接引用</p>
+<p>初始化：为类的静态变量赋予程序设定的初始值</p>
+<p>其实在加载之后，方法区中的常量只有数据结构的改变，从静态常量变为运行时常量。只有在类被卸载后（很难）方法区中的常量才会被回收（前提是方法区实现了垃圾回收），而静态变量我们知道，它们的生命周期和进程一致，只有程序停止运行才会被回收。</p>
+<p>详细方法区的学习可以看<a href="https://www.cnblogs.com/duanxz/p/3728737.html" target="_blank" rel="external">这篇文章</a></p>
+<h5 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h5><p>不是虚拟机运行时数据区的一部分，也不是java虚拟机规范中定义的内存区域；如果使用了NIO,这块区域会被频繁使用，在java堆内可以用directByteBuffer对象直接引用并操作。</p>
+<p>这块内存不受 java 堆大小限制，但受本机总内存的限制，可以通过-XX:MaxDirectMemorySize来设置（默认与堆内存最大值一样），所以也会出现OOM异常。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JVM/" rel="tag"># JVM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/23/RxJava用法及实战/" rel="prev" title="RxJava用法及实战">
+                RxJava用法及实战 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars3.githubusercontent.com/u/23710928?s=400&u=d2045e58dfd8ecab28842991a417765195a2ae66&v=4"
+                alt="LayneCui" />
+            
+              <p class="site-author-name" itemprop="name">LayneCui</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LayneCui" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://youtube.com/yourname" target="_blank" title="YouTube">
+                      
+                        <i class="fa fa-fw fa-youtube"></i>YouTube</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#特性"><span class="nav-number">1.1.</span> <span class="nav-text">特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM、JRE、JDK-的关系"><span class="nav-number">1.2.</span> <span class="nav-text">JVM、JRE、JDK 的关系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#角色"><span class="nav-number">2.</span> <span class="nav-text">角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构成"><span class="nav-number">3.</span> <span class="nav-text">构成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类加载器"><span class="nav-number">3.1.</span> <span class="nav-text">类加载器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行引擎"><span class="nav-number">3.2.</span> <span class="nav-text">执行引擎</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#本地方法接口"><span class="nav-number">3.3.</span> <span class="nav-text">本地方法接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#垃圾回收器"><span class="nav-number">3.4.</span> <span class="nav-text">垃圾回收器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行时数据区"><span class="nav-number">3.5.</span> <span class="nav-text">运行时数据区</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#程序计数器"><span class="nav-number">3.5.1.</span> <span class="nav-text">程序计数器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#虚拟机栈"><span class="nav-number">3.5.2.</span> <span class="nav-text">虚拟机栈</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#本地方法栈"><span class="nav-number">3.5.3.</span> <span class="nav-text">本地方法栈</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#堆"><span class="nav-number">3.5.4.</span> <span class="nav-text">堆</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#方法区"><span class="nav-number">3.5.5.</span> <span class="nav-text">方法区</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#直接内存"><span class="nav-number">3.5.6.</span> <span class="nav-text">直接内存</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LayneCui</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
